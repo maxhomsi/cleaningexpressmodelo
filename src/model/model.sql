@@ -18,3 +18,18 @@ create table maid_info (
     userId INT NOT NULL, 
     FOREIGN KEY (userId) REFERENCES users(id)
 )
+
+
+create table cust_info (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cust_name varchar(100) not null,
+    userId INT NOT NULL, 
+    FOREIGN KEY (userId) REFERENCES users(id)
+)
+
+create table services (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    type_job varchar(100) not null
+    
+
+)

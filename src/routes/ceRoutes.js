@@ -9,12 +9,12 @@ router.get("/maids", controller.maidList)
 router.post("/maid_info", auth.verifyJWT, controller.registerMaid)
 router.get("/maid_info/:id", auth.verifyJWT, controller.maidInfo) //paramos aqui para criar a funcao
 
-router.get("/customer", controller.custList)
+
 router.post("/cust_info", auth.verifyJWT, controller.registerCust)
-router.get("/cust_info/:id", auth.verifyJWT, controller.registerCust)
+router.get("/cust_info/:id", auth.verifyJWT, controller.custInfo)
 
 router.get("/services", controller.services)
-router.post("/type_job", controller.typeJob)
+// router.post("/type_job", controller.typeJob)
 
 
 
