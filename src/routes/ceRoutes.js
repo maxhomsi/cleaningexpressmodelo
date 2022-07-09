@@ -13,9 +13,9 @@ router.get("/maid_info/:id", auth.verifyJWT, controller.maidInfo) //paramos aqui
 router.post("/cust_info", auth.verifyJWT, controller.registerCust)
 router.get("/cust_info/:id", auth.verifyJWT, controller.custInfo)
 
-router.get("/services", controller.services)
-// router.post("/type_job", controller.typeJob)
+router.post("/maidChoice",auth.verifyJWT, controller.maidChoice)
 
+router.post("/profileMatch", auth.verifyJWT, controller.match)
 
 
 

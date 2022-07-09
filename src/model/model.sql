@@ -33,3 +33,22 @@ create table services (
     
 
 )
+
+create table maid_services (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    servicesId INT NOT NULL,
+    FOREIGN KEY (servicesId) REFERENCES services(id),
+    maidId INT NOT NULL,
+    FOREIGN KEY (maidId) REFERENCES maid_info(id),
+    userId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(id)
+
+)
+
+create table profileMatch (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cust_id INT NOT NULL,
+    FOREIGN KEY (cust_id) REFERENCES cust_info(id),
+    maid_id INT NOT NULL,
+    FOREIGN KEY (maid_id) REFERENCES maid_info(id)
+)

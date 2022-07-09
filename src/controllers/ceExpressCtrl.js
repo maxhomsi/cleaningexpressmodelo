@@ -68,66 +68,131 @@ let maidInfo = function (req, res) {
   });
 };
 
-
 let registerCust = function (req, res) {
-    console.log("registerCust");
-    console.log("TOKEN", req.newtoken);
-    let userId = req.newtoken.user_id;
-    let input = req.body;
-    let custName = input.cust_name;
-  
-    if (!custName) {
-      res.sendStatus(400).send("custName is required");
-      return;
-    }
-  
-    if (!userId) {
-      res.sendStatus(400).send("userId is required");
-      return;
-    }
-  
-    let sql = "insert into cust_info(cust_name, userId) values(?,?)";
-    let params = [custName, userId];
-  
-    db.query(sql, params, function (err, results) {
-      if (err) {
-        console.log("could not execute the insert", err); //se tiver o erro, envia a respota
-        res.sendStatus(500);
-      } else {
-        res.sendStatus(204);
-      }
-    });
-  };
-  let custInfo = function (req, res) {
-    console.log("custInfo");
-    let id = req.params.id;
-    let sql = "select id, cust_name from cust_info where id = ?";
-    let params = [];
-    params.push(id);
-    db.query(sql, params, function (err, results) {
-      if (err) {
-        console.log("could not execute the request", err); //se tiver o erro, envia a resposta
-        res.sendStatus(500);
-      } else {
-        if (results.length == 1) {
-          //procurando se so tem uma pessoa com o id
-          let result = results[0]; //???
-          res.json(results[0]);
-        } else if (results.length > 1) {
-          console.log("one more ID founded", id);
-          res.sendStatus(500);
-        } else {
-          res.sendStatus(404);
-        }
-      }
-    });
-  };
+  console.log("registerCust");
+  console.log("TOKEN", req.newtoken);
+  let userId = req.newtoken.user_id;
+  let input = req.body;
+  let custName = input.cust_name;
 
+  if (!custName) {
+    res.sendStatus(400).send("custName is required");
+    return;
+  }
+
+  if (!userId) {
+    res.sendStatus(400).send("userId is required");
+    return;
+  }
+
+  let sql = "insert into cust_info(cust_name, userId) values(?,?)";
+  let params = [custName, userId];
+
+  db.query(sql, params, function (err, results) {
+    if (err) {
+      console.log("could not execute the insert", err); //se tiver o erro, envia a respota
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(204);
+    }
+  });
+};
+let custInfo = function (req, res) {
+  console.log("custInfo");
+  let id = req.params.id;
+  let sql = "select id, cust_name from cust_info where id = ?";
+  let params = [];
+  params.push(id);
+  db.query(sql, params, function (err, results) {
+    if (err) {
+      console.log("could not execute the request", err); //se tiver o erro, envia a resposta
+      res.sendStatus(500);
+    } else {
+      if (results.length == 1) {
+        //procurando se so tem uma pessoa com o id
+        let result = results[0]; //???
+        res.json(results[0]);
+      } else if (results.length > 1) {
+        console.log("one more ID founded", id);
+        res.sendStatus(500);
+      } else {
+        res.sendStatus(404);
+      }
+    }
+  });
+};
+
+let maidChoice = function (req, res) {
+  console.log("maidChoice");
+  let userId = req.newtoken.user_id;
+  let maidId = req.body.maidId;
+  let serviceId = req.body.servicesId;
+
+  if (!serviceId) {
+    res.sendStatus(400).send("serviceId is required");
+    return;
+  }
+
+  if (!userId) {
+    res.sendStatus(400).send("userId is required");
+    return;
+  }
+
+  if (!maidId) {
+    res.sendStatus(400).send("maidId is required");
+    return;
+  }
+
+  let sql =
+    " insert into maid_services(servicesId, userId, maidId) values(?,?,?) ";
+  let params = [serviceId, userId, maidId];
+
+  db.query(sql, params, function (err, results) {
+    if (err) {
+      console.log("could not execute SQL insert", err);
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(204);
+    }
+  });
+};
+
+
+
+let match = function (req, res) {
+  console.log("match");
+  let maidId = req.body.maidId;
+  let custId = req.body.custId;
+
+  if (!maidId) {
+    res.sendStatus(400).send("maidId is required");
+    return;
+  }
+
+  if (!custId) {
+    res.sendStatus(400).send("custId is required");
+    return;
+  }
+
+  let sql = "insert into profileMatch(maid_id, cust_id) values(?,?)";
+  let params = [maidId, custId];
+
+  db.query(sql, params, function (err, results) {
+    if (err) {
+      console.log("could not execute SQL insert", err);
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(204);
+    }
+  });
+};
 
 module.exports = {
   maidList,
   registerMaid,
   maidInfo,
   registerCust,
-  custInfo
+  custInfo,
+  maidChoice,
+  match
 };
